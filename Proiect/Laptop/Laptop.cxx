@@ -2,12 +2,12 @@
 #include <iostream>
 #include <cstring>
 
-Laptop::Laptop(int year, std::string brand, std::string desc){
+Laptop::Laptop(int year, char *brand, char *desc){
 	std::cout<<"I have been created."<<std::endl;
 	this->year = year;
-	strcpy(this->brand, brand.c_str());
-	this->description = new char[desc.size()+1];
-	strcpy(this->description, desc.c_str());
+	strcpy(this->brand, brand);
+	this->description = new char[strlen(desc)+1];
+	strcpy(this->description, desc);
 	this->service_events = NULL;
 }
 
@@ -76,10 +76,10 @@ void Laptop::changeYear(int newYear){
 	this->year = newYear;
 }
 
-void Laptop::addService(std::string date, std::string type){
+void Laptop::addService(char *date, char *type){
 	Laptop::Service *p = new Service;
-	strcpy(p->date, date.c_str());
-	strcpy(p->type, type.c_str());
+	strcpy(p->date, date);
+	strcpy(p->type, type);
 	p->prev = this->service_events;
 	this->service_events = p;
 }

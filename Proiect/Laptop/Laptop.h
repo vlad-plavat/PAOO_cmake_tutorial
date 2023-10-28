@@ -15,12 +15,12 @@ class Laptop{
 	Service *service_events;
 
 public:
-	Laptop(int year, std::string brand, std::string desc);
+	Laptop(int year, char *brand, char *desc);
 	~Laptop();
 	Laptop(const Laptop &oldLaptop);
 	Laptop(Laptop &&oldLaptop);
 	void show();
 	void changeYear(int newYear);
-	void addService(std::string date, std::string type);
+	void addService(char *date, char *type);
 	void solveService();
 };
