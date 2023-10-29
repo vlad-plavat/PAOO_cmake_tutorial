@@ -11,4 +11,4 @@ add_executable(LaptopDemo LaptopDemo.cxx)
 
 target_link_libraries(LaptopDemo PUBLIC Laptop)
 
-target_include_directories(LaptopDemo PUBLIC "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/Laptop")
+target_include_directories(LaptopDemo PUBLIC "${PROJECT_SOURCE_DIR}/Laptop")
