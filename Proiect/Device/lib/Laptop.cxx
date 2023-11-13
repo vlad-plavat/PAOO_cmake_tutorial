@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstring>
 
+using namespace Laptop_nmsp;
+
 Laptop::Laptop(int year, char *brand, char *desc){
 	std::cout<<"I have been created."<<std::endl;
 	this->year = year;
@@ -9,11 +11,13 @@ Laptop::Laptop(int year, char *brand, char *desc){
 	this->description = new char[strlen(desc)+1];
 	strcpy(this->description, desc);
 	this->service_events = NULL;
+	this->isOn = 0;
 }
 
 Laptop::Laptop(const Laptop &oldLaptop){
 	std::cout<<"I have been copied."<<std::endl;
 	this->year = oldLaptop.year;
+	this->isOn = oldLaptop.isOn;
 	strcpy(this->brand, oldLaptop.brand);
 	this->description = new char[strlen(oldLaptop.description)+1];
 	strcpy(this->description, oldLaptop.description);
@@ -36,6 +40,18 @@ Laptop::Laptop(const Laptop &oldLaptop){
 	this->service_events = prev;
 }
 
+
+Laptop::Laptop(Laptop &&oldLaptop){
+	std::cout<<"I have been moved."<<std::endl;
+	this->year = oldLaptop.year;
+	this->isOn = oldLaptop.isOn;
+	strcpy(this->brand, oldLaptop.brand);
+	this->description = oldLaptop.description;
+	this->service_events = oldLaptop.service_events;
+	oldLaptop.description = NULL;
+	oldLaptop.service_events = NULL;
+}
+
 Laptop::~Laptop(){
 	std::cout<<"I have been deleted."<<std::endl;
 	delete[] this->description;
@@ -48,14 +64,63 @@ Laptop::~Laptop(){
 }
 
 
-Laptop::Laptop(Laptop &&oldLaptop){
-	std::cout<<"I have been moved."<<std::endl;
+Laptop& Laptop::operator=(const Laptop &oldLaptop){
+	std::cout<<"I have been copy-assigned."<<std::endl;
+	
+	delete[] this->description;
+	Laptop::Service *p = this->service_events, *np = NULL;
+	while(p != NULL){
+		np = p->prev;
+		delete p;
+		p = np;
+	}
+	
 	this->year = oldLaptop.year;
+	this->isOn = oldLaptop.isOn;
+	strcpy(this->brand, oldLaptop.brand);
+	this->description = new char[strlen(oldLaptop.description)+1];
+	strcpy(this->description, oldLaptop.description);
+	p = oldLaptop.service_events;
+	np = NULL;
+	while(p != NULL){
+		Laptop::Service *nserv = new Service;
+		strcpy(nserv->date, p->date);
+		strcpy(nserv->type, p->type);
+		nserv->prev=np;
+		np=nserv;
+		p = p->prev;
+	}
+	Laptop::Service *cr=np, *prev=NULL, *nxt=NULL;
+	while(cr != NULL){
+		nxt = cr->prev;
+		cr->prev = prev;
+		prev = cr;
+		cr = nxt;
+	}
+	this->service_events = prev;
+	return *this;
+}
+
+Laptop& Laptop::operator=(Laptop &&oldLaptop){
+	std::cout<<"I have been move-assigned."<<std::endl;
+	
+	delete[] this->description;
+	Laptop::Service *p = this->service_events, *np = NULL;
+	while(p != NULL){
+		np = p->prev;
+		delete p;
+		p = np;
+	}
+	
+	this->year = oldLaptop.year;
+	this->isOn = oldLaptop.isOn;
 	strcpy(this->brand, oldLaptop.brand);
 	this->description = oldLaptop.description;
 	this->service_events = oldLaptop.service_events;
 	oldLaptop.description = NULL;
 	oldLaptop.service_events = NULL;
+	
+	return *this;
 }
 
 void Laptop::show(){
@@ -90,4 +155,20 @@ void Laptop::solveService(){
 		strcat(p->type, " - SOLVED");
 		p = p->prev;
 	}
+}
+
+void Laptop::turnOn(){
+	isOn = 1;
+}
+
+void Laptop::turnOff(){
+	isOn = 0;
+}
+
+float Laptop::getPowerConsumption(){
+	return isOn?50:0;
+}
+
+void Laptop::playGame(char *game){
+	std::cout<<"Playing "<<game<<" on "<<brand<<" laptop using integrated GPU."<<std::endl;
 }
