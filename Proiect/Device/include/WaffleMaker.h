@@ -15,6 +15,7 @@ public:
 	void turnOn() override;
 	void turnOff() override;
 	float getPowerConsumption() override;
+	void setWaffles(int nrWaf);
 };
 
 }

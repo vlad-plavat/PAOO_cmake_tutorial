@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
+#include "Device.h"
 #include "Laptop.h"
 #include "GamingLaptop.h"
+#include "WaffleMaker.h"
 
 using namespace WaffleMaker_nmsp;
 using namespace Laptop_nmsp;
@@ -42,6 +44,11 @@ int main(int argc, char* argv[])
   msi_asg.show();
   msi_asg = std::move(sony);
   msi_asg.show();
+  
+  WaffleMaker wfl;
+  wfl.setWaffles(4);
+  wfl.turnOn();
+  std::cout<<"The waffle maker is using "<<wfl.getPowerConsumption()<<" watts."<<std::endl;
   
   std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
   

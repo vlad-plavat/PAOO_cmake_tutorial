@@ -31,3 +31,9 @@ void WaffleMaker::turnOff(){
 float WaffleMaker::getPowerConsumption(){
 	return isOn?numberOfWaffles*20:0;
 }
+
+
+void WaffleMaker::setWaffles(int nrWaf){
+	this->numberOfWaffles = nrWaf;
+}
+
