@@ -10,5 +10,6 @@ add_subdirectory(Device)
 add_executable(LaptopDemo LaptopDemo.cxx)
 
 target_link_libraries(LaptopDemo PUBLIC Laptop)
+target_link_libraries(LaptopDemo PUBLIC pthread)
 
 target_include_directories(LaptopDemo PUBLIC "${PROJECT_SOURCE_DIR}/Device")

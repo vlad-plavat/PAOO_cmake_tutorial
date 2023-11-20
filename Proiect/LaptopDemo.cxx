@@ -4,6 +4,7 @@
 #include "Laptop.h"
 #include "GamingLaptop.h"
 #include "WaffleMaker.h"
+#include <unistd.h>
 
 using namespace WaffleMaker_nmsp;
 using namespace Laptop_nmsp;
@@ -65,6 +66,11 @@ int main(int argc, char* argv[])
   lapg_t.show();
   lapg_t.playGame((char*)"Fallout 4");
   lapg_l.playGame((char*)"Fallout 4");
+  
+  std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
+  
+  lapg_t.saveGame((char*)"Fallout");
+  sleep(2);
   
   return 0;
 }
