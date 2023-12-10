@@ -6,10 +6,12 @@ namespace GamingLaptop_nmsp{
 
 class GamingLaptop: public Laptop_nmsp::Laptop{
 	
+	static char savedFile[20][100];
+	
+	
 	char GPU[100];
 	char savedData[1000];
 	static void* threadTask(void *game);
-	
 public:
 	GamingLaptop(int year, char *brand, char *desc, char *GPU);
 	void printGPU();
@@ -17,6 +19,7 @@ public:
 	float getPowerConsumption() override;
 	void playGame(char *game);	//play game using dedicated GPU
 	void saveGame(char *game);
+	static void printSaveFile();
 };
 
 }

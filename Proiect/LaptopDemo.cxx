@@ -5,6 +5,8 @@
 #include "GamingLaptop.h"
 #include "WaffleMaker.h"
 #include <unistd.h>
+#include <cstdlib>
+#include <time.h>
 
 using namespace WaffleMaker_nmsp;
 using namespace Laptop_nmsp;
@@ -13,6 +15,8 @@ using namespace Device_nmsp;
 
 int main(int argc, char* argv[])
 {
+
+  srand(time(NULL));
   Laptop hp(2019, (char*)"HP", (char*)"Some description for the HP laptop that has to be dynamically allocated.");
   Laptop msi(2020, (char*)"DELL", (char*)"Some description for the DELL laptop that has to be dynamically allocated.");
   Laptop sony(2021, (char*)"SONY", (char*)"Some description for the SONY laptop that has to be dynamically allocated.");
@@ -69,8 +73,11 @@ int main(int argc, char* argv[])
   
   std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
   
-  lapg_t.saveGame((char*)"Fallout");
-  sleep(2);
+  lapg_t.saveGame((char*)"Fallout");//max 100ms
+  lapg_t.saveGame((char*)"Skyrim");//max 100ms
+  usleep(500000);
+  GamingLaptop::printSaveFile();
+  
   
   return 0;
 }
