@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <time.h>
+#include <memory>
+
 
 using namespace WaffleMaker_nmsp;
 using namespace Laptop_nmsp;
@@ -77,7 +79,56 @@ int main(int argc, char* argv[])
   lapg_t.saveGame((char*)"Skyrim");//max 100ms
   usleep(500000);
   GamingLaptop::printSaveFile();
+  std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
   
   
+  {
+  	std::shared_ptr<Laptop> l1 = std::make_shared<Laptop>(2005, (char*)"SONY", (char*)"Laptopu celor 2 colegi.");
+  }
+  
+  std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
+  
+  std::shared_ptr<Laptop> gigel = std::make_shared<GamingLaptop>(2005, (char*)"SONY", (char*)"Laptopu celor 2 colegi.", (char*)"GTX1080"); 
+  std::shared_ptr<Laptop> andrei = gigel;
+  std::weak_ptr<Laptop> guest = gigel;
+
+	gigel->playGame((char*)"Age of empires");
+	andrei->playGame((char*)"Age of empires II");
+	
+	if (auto guest_s = guest.lock()) guest_s->playGame((char*)"Minesweeper");
+	else 									               std::cout<< "The guest can't play anything anymore."<<std::endl;
+	
+	gigel.reset();//Gigel nu mai foloseste laptopul(si-a luat unul nou); i-l lasa lui Andrei
+	
+	andrei->playGame((char*)"Age of empires III");
+	
+	if (auto guest_s = guest.lock()) guest_s->playGame((char*)"Minesweeper");
+	else 									               std::cout<< "The guest can't play anything anymore."<<std::endl;
+  
+  andrei.reset();//nici Andrei nu mai are nevoie de laptop
+  
+	if (auto guest_s = guest.lock()) guest_s->playGame((char*)"Minesweeper");
+	else 									               std::cout<< "The guest can't play anything anymore."<<std::endl;
+  
+  
+  std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
+  
+  std::weak_ptr<Laptop> wp1;
+  
+  {
+  	std::shared_ptr<Laptop> sp1 = std::make_shared<Laptop>(2000, (char*)"TOSHIBA", (char*)"Some description for the TOSHIBA laptop.");
+  	wp1 = sp1;
+  	sp1->show();
+  }
+  
+  if (auto laptop_s = wp1.lock()){
+    laptop_s->show();
+	} else
+	{
+		std::cout<< "The laptop object doesn't exist anymore"<<std::endl;
+	}
+  
+  
+  std::cout<<"------- ------- ------- ------- ------- ------- ------- ------- "<<std::endl;
   return 0;
 }
